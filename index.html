@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+	  <title>Domotic Panel</title>
+	  <style>
+	    * {
+	    	border: 0;
+	    	margin: 0;
+	    	padding: 0;
+	      font-family: helvetica, monospace;
+	      color: #FF794D;
+	      font-size: 0;
+	    }
+	    body {
+	      background: #FFFF9D;
+	    }
+      .part{
+        display: inline-block;
+        width: 50vw;
+      }
+	    .graph {
+	      height: 100vh;
+				width: 100%;
+	      background: #79BD8F;
+	    }
+      #bad{
+        background: #000;
+        height: 100vh;
+
+      }
+	  </style>
+	<script src="/socket.io/socket.io.js"></script>
+	</head>
+  <body>
+
+    <div id="good" class="part">
+      <div class="graph"></div>
+    </div>
+    <div id="bad" class="part"></div>
+
+
+	<script>
+		var socket = io(); // Creamos la conexion con el servidor
+
+		// Selecciona los elementos del DOM
+    var $graph = document.querySelector('.graph');
+    // var $button = document.querySelector('.button');
+    var height = 90;
+    var level = 0;
+
+    function game() {
+      height = height + level;
+      $graph.style.height= height + "vh";
+      console.log("" + level);
+    }
+    var timer = setInterval(game, 500);
+		// Evento onSensor: Crea el eventListener y nos indica cuando un
+		socket.on('sensor', function onSensorCallback(newLevel) {
+			// var width = (value * 100) / 1023;
+      // $graph.style.height= width + "%";
+      level = newLevel;
+		});
+
+		// $button.addEventListener("click", function (){
+    // 	socket.emit('buttonpress', 'bu!');
+		// });
+
+	</script>
+  </body>
+</html>
