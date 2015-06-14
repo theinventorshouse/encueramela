@@ -33,6 +33,11 @@ http.listen(WEBPORT, function serverStart() {
 	console.log(WEBPORT);
 });
 
+function game() {
+  io.emit('sensor', 0);
+}
+var timer = setTimeout(game, 100);
+
 Cylon.robot({
   connections: {
     neurosky: { adaptor: 'neurosky', port: '/dev/ttyS0' }
@@ -46,12 +51,14 @@ Cylon.robot({
     my.headset.on('attention', function(data) {
       var level;
       if (data > 50) {
-        level = -1;
+        level = -3;
       }else{
-        level = 1;
+        level = 3;
       }
+      clearTimeout(timer);
+      timer = setTimeout(game, 100);
       io.emit('sensor', level);
-      console.log("level" + level);
+      console.log("level: " + level);
     });
 
     // my.headset.on('meditation', function(data) {

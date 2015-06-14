@@ -23,6 +23,9 @@
 				width: 100%;
 	      background: #79BD8F;
 	    }
+      #good{
+        background: url('img/sc1.jpg');
+      }
       #bad{
         background: #000;
         height: 100vh;
@@ -50,8 +53,21 @@
 
     function game() {
       height = height + level;
+      height = height > 100 ? 100 : height;
       $graph.style.height= height + "vh";
-      console.log("" + level);
+
+      console.log("height: " + height);
+      if (height <= 0) {
+        alert("Ganaste :)");
+        location.reload();
+      }
+      if(height >= 100){
+        alert("Perdiste :(");
+        location.reload();
+      }
+
+
+
     }
     var timer = setInterval(game, 500);
 		// Evento onSensor: Crea el eventListener y nos indica cuando un
